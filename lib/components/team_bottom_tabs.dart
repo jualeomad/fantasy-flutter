@@ -1,14 +1,19 @@
+// TeamBottomTabs.dart
+
 import 'package:flutter/material.dart';
 
 class TeamBottomTabs extends StatefulWidget {
-  const TeamBottomTabs({Key? key}) : super(key: key);
+  final ValueChanged<String> onTabSelected;
+
+  const TeamBottomTabs({Key? key, required this.onTabSelected})
+      : super(key: key);
 
   @override
   _TeamBottomTabsState createState() => _TeamBottomTabsState();
 }
 
 class _TeamBottomTabsState extends State<TeamBottomTabs> {
-  String _selectedTab = "ALINEACIÓN"; // Tab inicial seleccionada
+  String _selectedTab = "ALINEACIÓN"; // Initial selected tab
 
   @override
   Widget build(BuildContext context) {
@@ -42,18 +47,20 @@ class _TeamBottomTabsState extends State<TeamBottomTabs> {
           onSelectionChanged: (newSelection) {
             setState(() {
               _selectedTab = newSelection.first;
+              widget.onTabSelected(
+                  _selectedTab); // Notify TeamScreen of the new selection
             });
           },
           style: ButtonStyle(
             backgroundColor: WidgetStateProperty.resolveWith<Color>(
               (states) => states.contains(WidgetState.selected)
-                  ? cs.secondary // Color del botón seleccionado
-                  : cs.primary, // Color del botón no seleccionado
+                  ? cs.secondary // Selected button color
+                  : cs.primary, // Non-selected button color
             ),
             foregroundColor: WidgetStateProperty.resolveWith<Color>(
               (states) => states.contains(WidgetState.selected)
-                  ? cs.onPrimary // Color del texto seleccionado
-                  : cs.onPrimary, // Color del texto no seleccionado
+                  ? cs.onPrimary // Selected text color
+                  : cs.onPrimary, // Non-selected text color
             ),
           ),
         ),
