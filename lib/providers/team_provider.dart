@@ -1,8 +1,9 @@
-import 'package:fantasy_flutter/db/database_helper.dart';
 import 'package:fantasy_flutter/models/player.dart';
 import 'package:flutter/material.dart';
 
 class TeamProvider with ChangeNotifier {
+  final PlayerRepository playerRepository;
+
   List<List<Player>> _listaDeListas = [];
   List<List<Player>> get listaDeListas => _listaDeListas;
 
@@ -21,7 +22,7 @@ class TeamProvider with ChangeNotifier {
   }
 
   // == CONSTRUCTOR == //
-  TeamProvider() {
+  TeamProvider(this.playerRepository) {
     final fp = Player(
         name: "Valverde",
         imageUrl:
@@ -63,14 +64,29 @@ class TeamProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> fetchPlayers() async {
-    final db = await DatabaseHelper.initializeDb();
-    final playerDatabase = PlayerDatabase(db);
+  // Future<void> fetchPlayers() async {
+  //   final db = await DatabaseHelper.initializeDb();
+  //   final playerDatabase = PlayerDatabase(db);
 
+  //   _isLoading = true;
+  //   if (!_isDisposed) notifyListeners(); // Notify only if not disposed
+
+  //   _myPlayers = await playerDatabase.getPlayers();
+
+  //   _isLoading = false;
+  //   if (!_isDisposed) notifyListeners(); // Notify only if not disposed
+  // }
+  Future<void> fetchPlayers() async {
     _isLoading = true;
     if (!_isDisposed) notifyListeners(); // Notify only if not disposed
 
-    _myPlayers = await playerDatabase.getPlayers();
+    try {
+      _myPlayers = await playerRepository.getPlayers();
+      debugPrint("JUGADORES REPO: ${_myPlayers.toString()}");
+    } catch (e) {
+      // Handle any errors here (e.g., log them or show an error message in the UI)
+      print('Failed to fetch players: $e');
+    }
 
     _isLoading = false;
     if (!_isDisposed) notifyListeners(); // Notify only if not disposed

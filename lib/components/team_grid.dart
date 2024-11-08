@@ -34,7 +34,7 @@ class TeamGrid extends StatelessWidget {
     // Configuración de tamaño de tarjeta y separación de filas
     // double cardWidth =
     // screenWidth * 0.15; // Ajuste del tamaño para adaptarse mejor
-    double cardHeight = screenHeight * 0.13;
+    double cardHeight = screenHeight * 0.12;
     double rowSeparation = screenHeight * 0.03;
 
     return Consumer<TeamProvider>(
@@ -53,7 +53,7 @@ class TeamGrid extends StatelessWidget {
             ),
             // Jugadores en posiciones específicas
             Padding(
-              padding: EdgeInsets.zero,
+              padding: EdgeInsets.only(top: screenHeight * 0.09),
               child: Column(
                 children: [
                   // Delanteros

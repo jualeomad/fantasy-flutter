@@ -1,7 +1,10 @@
+import 'package:fantasy_flutter/models/player.dart';
 import 'package:flutter/services.dart';
 import 'package:sqflite/sqflite.dart';
 import 'dart:io';
 import 'package:path/path.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 Future<void> copyDatabase() async {
   var databasesPath = await getDatabasesPath();
@@ -53,12 +56,32 @@ Future<void> copyDatabase() async {
   }
 }
 
-Future<List<Map<String, dynamic>>> getPlayers() async {
-  var dbDir = await getDatabasesPath();
-  var dbPath = join(dbDir, "jugadores_v2.db");
-  final Database db = await openDatabase(dbPath);
-  return await db
-      .query('jugadores'); // Selecciona todos los registros de la tabla 'users'
+// Future<List<Map<String, dynamic>>> getPlayers() async {
+//   var dbDir = await getDatabasesPath();
+//   var dbPath = join(dbDir, "jugadores_v2.db");
+//   final Database db = await openDatabase(dbPath);
+//   return await db
+//       .query('jugadores'); // Selecciona todos los registros de la tabla 'users'
+// }
+
+
+Future<List<Player>> getPlayers() async {
+  final url = Uri.parse('http://localhost:3000/jugadores');
+
+  // Send a GET request to the specified URL
+  final response = await http.get(url);
+
+  // Check if the request was successful
+  if (response.statusCode == 200) {
+    // Decode the JSON response
+    final List<dynamic> jsonData = json.decode(response.body);
+
+    // Convert each entry to a Player object using the fromJson factory
+    return jsonData.map((json) => Player.fromJson(json)).toList();
+  } else {
+    // Handle the error
+    throw Exception('Failed to load players');
+  }
 }
 
 Future<List<Map<String, Object?>>> getTables() async {

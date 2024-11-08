@@ -44,10 +44,10 @@ class PlayerCard extends StatelessWidget {
                 ),
                 // ESCUDO
                 Positioned(
-                  width: 25,
-                  height: 25,
-                  top: 4,
-                  left: 3,
+                  width: cardWidth * 0.3,
+                  // height: 25,
+                  top: cardHeight * 0.05,
+                  left: cardWidth * 0.05,
                   child: ClipRRect(
                     child: Center(
                       child: Image.asset(
@@ -63,10 +63,10 @@ class PlayerCard extends StatelessWidget {
                 ),
                 // Box superior izquierda con el rating
                 Positioned(
-                  width: 25,
-                  height: 25,
-                  top: 4,
-                  right: 3,
+                  width: cardWidth * 0.3,
+                  height: cardWidth * 0.3,
+                  top: cardHeight * 0.05,
+                  right: cardWidth * 0.05,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(7),
                     child: Container(
@@ -77,7 +77,7 @@ class PlayerCard extends StatelessWidget {
                           player.rating.toString(),
                           textAlign: TextAlign.center,
                           style: GoogleFonts.crimsonText(
-                            fontSize: 15,
+                            fontSize: cardWidth * 0.18,
                             fontWeight: FontWeight.w700,
                           ),
                         ),

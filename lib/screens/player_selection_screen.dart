@@ -17,7 +17,7 @@ class PlayerSelectionScreen extends StatelessWidget {
         title: Text('Seleccionar Jugador'),
       ),
       body: Padding(
-        padding: EdgeInsets.all(8.0),
+        padding: EdgeInsets.all(30),
         child: ListView.builder(
           itemCount: players.length,
           itemBuilder: (context, index) {

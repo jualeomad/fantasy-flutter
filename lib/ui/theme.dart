@@ -15,4 +15,4 @@ final themeData = ThemeData(
       backgroundColor: Colors.black, // Color del AppBar
       foregroundColor: Colors.white, // Color del texto e iconos en el AppBar
     ),
-    tabBarTheme: TabBarTheme(labelColor: Color(0xFFF1C40F)));
+    tabBarTheme: TabBarTheme(labelColor: Color(0xFFF1C40F), unselectedLabelColor: Colors.white));
