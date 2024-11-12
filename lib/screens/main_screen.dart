@@ -13,7 +13,7 @@ class MainScreen extends StatelessWidget {
     return Scaffold(
         drawer: MainDrawer(),
         appBar: AppBar(
-          // toolbarHeight: 35, // DEFAULT: 56
+          toolbarHeight: 35, // DEFAULT: 56
           flexibleSpace: ColorFiltered(
             colorFilter: ColorFilter.mode(
               Colors.black.withOpacity(
