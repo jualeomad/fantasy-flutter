@@ -1,21 +1,34 @@
 import 'dart:convert';
+import 'dart:math';
 import 'package:fantasy_flutter/ui/custom_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class Player {
   final String name;
+  final String apodo;
   final String imageUrl;
   final String position;
   final int rating;
   final String team;
 
-  Player(
-      {required this.name,
-      required this.imageUrl,
-      required this.rating,
-      required this.position,
-      required this.team});
+  Player({
+    required this.name,
+    required this.imageUrl,
+    required this.rating,
+    required this.position,
+    required this.team,
+  }) : apodo = _generarApodo(name);
+
+  static String _generarApodo(String name) {
+    List<String> split = name.split(" ");
+    // Verificamos si hay al menos dos partes en el nombre
+    if (split.length > 1) {
+      return split[1]; // Retorna el apellido o segunda parte del nombre
+    } else {
+      return split[0]; // Retorna el nombre completo si solo hay una palabra
+    }
+  }
 
   // Método para crear un objeto Player desde un Map.
   factory Player.fromMap(Map<String, dynamic> map) {
@@ -53,7 +66,7 @@ class Player {
   }
 
   static Color getBgColorByPosition(String position) {
-   switch (position) {
+    switch (position) {
       case 'DEF':
         return CustomColors.dfBackground;
       case 'MED':
@@ -86,29 +99,21 @@ class PlayerRepository {
       // Decode the JSON response
       final List<dynamic> jsonData = json.decode(response.body);
 
-      // Create a map to group players by team
-      final Map<String, List<Player>> playersByTeam = {};
+      // Parse JSON data into Player objects
+      final List<Player> allPlayers =
+          jsonData.map((playerJson) => Player.fromJson(playerJson)).toList();
 
-      for (var playerJson in jsonData) {
-        final player = Player.fromJson(playerJson);
-        final team = player.team;
+      // Randomly select up to 30 players
+      final random = Random();
+      final List<Player> randomPlayers = [];
 
-        // Initialize the team list if it doesn't exist
-        if (!playersByTeam.containsKey(team)) {
-          playersByTeam[team] = [];
-        }
-
-        // Add player to team list if there are less than 2 players for that team
-        if (playersByTeam[team]!.length < 2) {
-          playersByTeam[team]!.add(player);
-        }
+      // Shuffle and take 30 unique players or fewer if the list has less than 30
+      while (randomPlayers.length < 30 && allPlayers.isNotEmpty) {
+        final index = random.nextInt(allPlayers.length);
+        randomPlayers.add(allPlayers.removeAt(index));
       }
 
-      // Combine all players into a single list, limited to 2 per team
-      final List<Player> limitedPlayers =
-          playersByTeam.values.expand((x) => x).toList();
-
-      return limitedPlayers;
+      return randomPlayers;
     } else {
       // Handle HTTP error
       throw Exception('Failed to load players');

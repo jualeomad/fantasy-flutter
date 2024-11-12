@@ -43,7 +43,8 @@ class PlayerSelectionRow extends StatelessWidget {
                                 Flexible(
                                   flex: 1,
                                   child: Text(
-                                    player.name,
+                                    // player.name,
+                                    player.apodo,
                                     style: GoogleFonts.inter(
                                         color: themeData.colorScheme.onPrimary,
                                         fontSize: 12),
