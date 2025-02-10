@@ -1,4 +1,5 @@
 import 'package:fantasy_flutter/providers/navigation_provider.dart';
+import 'package:fantasy_flutter/screens/partidos_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../screens/liga_screen.dart';
@@ -50,6 +51,23 @@ class MainDrawer extends StatelessWidget {
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(builder: (context) => LigaScreen()), // Navega a LigaScreen
+              );
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.emoji_events),
+            title: Text('Partidos'),
+            tileColor: navigationProvider.currentScreen == 'PartidosScreen'
+                ? Colors.blue[100]
+                : null,
+            onTap: () {
+              navigationProvider
+                  .setCurrentScreen('PartidosScreen'); // Actualiza el estado
+              Navigator.pop(context);
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => PartidosScreen()), // Navega a LigaScreen
               );
             },
           ),

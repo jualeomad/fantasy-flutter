@@ -1,12 +1,12 @@
 import 'package:fantasy_flutter/components/main_drawer.dart';
-import 'package:fantasy_flutter/screens/tabs/team_screen.dart';
+import 'package:fantasy_flutter/components/partidos_screen/jornada_partidos.dart';
 import 'package:fantasy_flutter/ui/custom_colors.dart';
 import 'package:fantasy_flutter/ui/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class MainScreen extends StatelessWidget {
-  const MainScreen({Key? key}) : super(key: key);
+class PartidosScreen extends StatelessWidget {
+  const PartidosScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -36,8 +36,7 @@ class MainScreen extends StatelessWidget {
               TextSpan(
                 text: "P",
                 style: TextStyle(
-                    color:
-                        CustomColors.yellowButton), // Color amarillo para "P"
+                    color: CustomColors.yellowButton), // Color amarillo para "P"
               ),
               TextSpan(
                 text: "ro", // El resto del texto
@@ -51,9 +50,8 @@ class MainScreen extends StatelessWidget {
             ],
           )),
           centerTitle: true,
+          
         ),
-        body: Padding(
-            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-            child: Text("hola", style: TextStyle(color: Colors.white))));
+        body: JornadaPartidos());
   }
 }
